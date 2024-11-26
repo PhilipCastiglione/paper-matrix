@@ -1,5 +1,5 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: %i[ show edit update destroy ]
+  before_action :set_paper, only: %i[ show edit update destroy fetch_source_file ]
 
   # GET /papers or /papers.json
   def index
@@ -54,7 +54,7 @@ class PapersController < ApplicationController
         format.html { redirect_to @paper, notice: "Source file was successfully fetched." }
         format.json { render :show, status: :ok, location: @paper }
       else
-        format.html { redirect_to @paper, alert: "Unable to fetch source file from url." }
+        format.html { redirect_to @paper, alert: @paper.errors.full_messages.join(", ") }
         format.json { render json: @paper.errors, status: :unprocessable_entity }
       end
     end
