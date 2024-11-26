@@ -1,16 +1,11 @@
 <p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Papers" %>
-
 <h1>Papers</h1>
-
+<%= link_to "New paper", new_paper_path %>
 <div id="papers">
   <% @papers.each do |paper| %>
-    <%= render paper %>
-    <p>
-      <%= link_to "Show this paper", paper %>
-    </p>
+    <%= link_to paper do %>
+      <%= render paper %>
+    <% end %>
   <% end %>
 </div>
-
-<%= link_to "New paper", new_paper_path %>

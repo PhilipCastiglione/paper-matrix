@@ -1,37 +1,3 @@
 <div id="<%= dom_id paper %>">
-  <p>
-    <strong>Url:</strong>
-    <%= paper.url %>
-  </p>
-
-  <p>
-    <strong>Title:</strong>
-    <%= paper.title %>
-  </p>
-
-  <p>
-    <strong>Read:</strong>
-    <%= paper.read %>
-  </p>
-
-  <p>
-    <strong>Authors:</strong>
-    <%= paper.authors %>
-  </p>
-
-  <p>
-    <strong>Year:</strong>
-    <%= paper.year %>
-  </p>
-
-  <p>
-    <strong>Auto summary:</strong>
-    <%= paper.auto_summary %>
-  </p>
-
-  <p>
-    <strong>Notes:</strong>
-    <%= paper.notes %>
-  </p>
-
+  <%= paper.title.present? ? paper.title : "Title" %>, <%= paper.year.present? ? paper.year : "Year" %>, <%= paper.read? ? "Read" : "Unread" %>
 </div>
