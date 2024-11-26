@@ -1,0 +1,52 @@
+<%= form_with(model: paper) do |form| %>
+  <% if paper.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
+
+      <ul>
+        <% paper.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :url, style: "display: block" %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :read, style: "display: block" %>
+    <%= form.checkbox :read %>
+  </div>
+
+  <div>
+    <%= form.label :authors, style: "display: block" %>
+    <%= form.text_field :authors %>
+  </div>
+
+  <div>
+    <%= form.label :year, style: "display: block" %>
+    <%= form.text_field :year %>
+  </div>
+
+  <div>
+    <%= form.label :auto_summary, style: "display: block" %>
+    <%= form.textarea :auto_summary %>
+  </div>
+
+  <div>
+    <%= form.label :notes, style: "display: block" %>
+    <%= form.textarea :notes %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
