@@ -9,17 +9,9 @@
       </ul>
     </div>
   <% end %>
-  <p>
-    <strong>Url:</strong>
-    <%= @paper.url %>
-  </p>
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
-  </div>
-  <div>
-    <%= form.label :read, style: "display: block" %>
-    <%= form.checkbox :read %>
   </div>
   <div>
     <%= form.label :authors, style: "display: block" %>
@@ -36,6 +28,10 @@
   <div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.rich_textarea :notes %>
+  </div>
+  <div>
+    <%= form.label :read, style: "display: block" %>
+    <%= form.checkbox :read %>
   </div>
   <div>
     <%= form.submit %>

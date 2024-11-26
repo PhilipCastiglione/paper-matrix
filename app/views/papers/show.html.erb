@@ -1,23 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<h2><%= render @paper %></h2>
 <p>
   <strong>Url:</strong>
   <%= @paper.url %>
 </p>
 <p>
-  <strong>Title:</strong>
-  <%= @paper.title %>
-</p>
-<p>
-  <strong>Read:</strong>
-  <%= @paper.read %>
-</p>
-<p>
-  <strong>Authors:</strong>
-  <%= @paper.authors %>
-</p>
-<p>
-  <strong>Year:</strong>
-  <%= @paper.year %>
+  <strong>Source File:</strong>
+  <%= link_to @paper.source_file.filename, rails_blob_path(@paper.source_file, disposition: "attachment") if @paper.source_file.attached? %>
 </p>
 <p>
   <strong>Auto summary:</strong>
@@ -27,8 +15,12 @@
   <strong>Notes:</strong>
   <%= @paper.notes %>
 </p>
+<p>
+  <strong>Read:</strong>
+  <%= @paper.read %>
+</p>
 <div>
-  <%= button_to "Fetch source file", @paper, method: :post if @paper.url.present? && !@paper.source_file.attached? %>
+  <%= (button_to "Fetch source file", fetch_source_file_path(@paper)) if @paper.url.present? && !@paper.source_file.attached? %>
   <%= link_to "Edit this paper", edit_paper_path(@paper) %> |
   <%= link_to "Back to papers", papers_path %>
   <%= button_to "Destroy this paper", @paper, method: :delete %>
