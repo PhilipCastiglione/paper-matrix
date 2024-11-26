@@ -1,11 +1,7 @@
 <% content_for :title, "New paper" %>
-
 <h1>New paper</h1>
-
-<%= render "form", paper: @paper %>
-
+<%= render "new", paper: @paper %>
 <br>
-
 <div>
   <%= link_to "Back to papers", papers_path %>
 </div>

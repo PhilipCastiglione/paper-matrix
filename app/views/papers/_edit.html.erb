@@ -9,10 +9,10 @@
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.label :url, style: "display: block" %>
-    <%= form.text_field :url %>
-  </div>
+  <p>
+    <strong>Url:</strong>
+    <%= @paper.url %>
+  </p>
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
@@ -29,10 +29,10 @@
     <%= form.label :year, style: "display: block" %>
     <%= form.text_field :year %>
   </div>
-  <div>
-    <%= form.label :auto_summary, style: "display: block" %>
-    <%= form.textarea :auto_summary %>
-  </div>
+  <p>
+    <strong>Auto summary:</strong>
+    <%= @paper.auto_summary %>
+  </p>
   <div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.rich_textarea :notes %>
