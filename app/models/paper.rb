@@ -5,7 +5,6 @@
 #  id           :integer          not null, primary key
 #  authors      :string
 #  auto_summary :text
-#  notes        :text
 #  read         :boolean          default(FALSE)
 #  title        :string
 #  url          :string
@@ -15,8 +14,25 @@
 #
 class Paper < ApplicationRecord
   has_rich_text :notes
+  has_one_attached :source_file
 
   validate :creation_requirements, on: :create
+
+  def fetch_source_file_from_url!
+    return if url.blank? || source_file.attached?
+
+    uri = URI.parse(url)
+    response = Net::HTTP.get_response(uri)
+
+    # TODO: we should check the content type and only allow certain types
+    if response.is_a?(Net::HTTPSuccess)
+      source_file.attach(io: StringIO.new(response.body), filename: File.basename(uri.path))
+      true
+    else
+      errors.add(:base, "Unable to fetch source file from url")
+      false
+    end
+  end
 
   private
 

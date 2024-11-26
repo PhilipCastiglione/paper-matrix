@@ -47,6 +47,19 @@ class PapersController < ApplicationController
     end
   end
 
+  # POST /papers/1/fetch_source_file
+  def fetch_source_file
+    respond_to do |format|
+      if @paper.fetch_source_file_from_url!
+        format.html { redirect_to @paper, notice: "Source file was successfully fetched." }
+        format.json { render :show, status: :ok, location: @paper }
+      else
+        format.html { redirect_to @paper, alert: "Unable to fetch source file from url." }
+        format.json { render json: @paper.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /papers/1 or /papers/1.json
   def destroy
     @paper.destroy!
@@ -65,6 +78,6 @@ class PapersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def paper_params
-      params.expect(paper: [ :url, :title, :read, :authors, :year, :auto_summary, :notes ])
+      params.expect(paper: [ :url, :title, :read, :authors, :year, :auto_summary, :notes, :source_file ])
     end
 end
