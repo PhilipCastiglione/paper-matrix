@@ -5,7 +5,6 @@
 #  id           :integer          not null, primary key
 #  authors      :string
 #  auto_summary :text
-#  notes        :text
 #  read         :boolean          default(FALSE)
 #  title        :string
 #  url          :string
