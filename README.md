@@ -34,6 +34,9 @@ bin/rails test
 
 ## TODO
 
+- tests
+    - add model tests
+    - make system tests pass
 - add auth
     - tests
 - generate autosummary using chatty
@@ -46,7 +49,6 @@ bin/rails test
     - flashes
     - nicer validator errors
 - update README
-- add all the tests
 - deploy to prod
     - update README with instructions
     - backups for db, action storage

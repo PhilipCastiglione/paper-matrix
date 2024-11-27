@@ -12,7 +12,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
-require "test_helper"
+require "unit_test_case"
 
 class PaperTest < ActiveSupport::TestCase
   # test "the truth" do

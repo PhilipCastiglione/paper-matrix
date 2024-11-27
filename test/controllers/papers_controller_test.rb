@@ -1,4 +1,4 @@
-require "test_helper"
+require "unit_test_case"
 
 class PapersControllerTest < ActionDispatch::IntegrationTest
   setup do
