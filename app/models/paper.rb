@@ -41,17 +41,30 @@ class Paper < ApplicationRecord
   private
 
   def creation_requirements
-    if url.blank?
-      # TODO: we will add support for creation with a file upload in the future
-      errors.add(:base, "Url is required")
-    else
+    if url.blank? && !source_file.attached?
+      errors.add(:base, "Url or source file is required")
+    end
+
+    if url.present? && source_file.attached?
+      errors.add(:base, "Only one of url or source file can be present")
+    end
+
+    if source_file.attached?
+      unless source_file.blob.content_type.start_with?("application/pdf")
+        errors.add(:base, "Source file must be a PDF")
+      end
+    end
+
+    if url.present?
       unless url.end_with?(".pdf")
         errors.add(:base, "Url must end with .pdf")
       end
 
       begin
         uri = URI.parse(url)
-        errors.add(:base, "Url is invalid") unless (uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)) && !uri.host.nil?
+        if uri.host.nil? || !(uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS))
+          errors.add(:base, "Url is invalid")
+        end
       rescue URI::InvalidURIError
         errors.add(:base, "Url is invalid")
       end

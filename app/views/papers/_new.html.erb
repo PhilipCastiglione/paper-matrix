@@ -14,6 +14,10 @@
     <%= form.text_field :url %>
   </div>
   <div>
+    <%= form.label :source_file, style: "display: block" %>
+    <%= form.file_field :source_file %>
+  </div>
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
