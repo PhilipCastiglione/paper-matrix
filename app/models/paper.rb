@@ -10,7 +10,7 @@ require "net/http"
 #  read         :boolean          default(FALSE)
 #  title        :string
 #  url          :string
-#  year         :string
+#  year         :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
@@ -18,6 +18,10 @@ class Paper < ApplicationRecord
   has_rich_text :notes
   has_one_attached :source_file
 
+  default_scope { order(year: :desc, authors: :asc, title: :asc) }
+
+  validates :title, uniqueness: true, allow_blank: true
+  validates :url, uniqueness: true, allow_blank: true
   validate :creation_requirements, on: :create
 
   def fetch_source_file_from_url!

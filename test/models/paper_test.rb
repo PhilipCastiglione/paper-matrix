@@ -8,7 +8,7 @@
 #  read         :boolean          default(FALSE)
 #  title        :string
 #  url          :string
-#  year         :string
+#  year         :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
