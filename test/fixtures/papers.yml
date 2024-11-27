@@ -15,19 +15,17 @@
 #  updated_at   :datetime         not null
 #
 one:
-  url: MyString
-  title: MyString
+  url: https://coolpaper.com/paper.pdf
+  title: In Defence Of Brains
   read: false
-  authors: MyString
-  year: MyString
-  auto_summary: MyText
-  notes: MyText
+  authors: John Doe
+  year: 2000
+  auto_summary: Brains are cool! They help us think and stuff.
 
 two:
-  url: MyString
-  title: MyString
-  read: false
-  authors: MyString
-  year: MyString
-  auto_summary: MyText
-  notes: MyText
+  url:
+  title: Are Computers Learning Too Much?
+  read: true
+  authors: Jane Doe
+  year: 2010
+  auto_summary: Computers are learning too much! They're going to take over the world!

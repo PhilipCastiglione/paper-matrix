@@ -2,3 +2,7 @@
 #   record: name_of_fixture (ClassOfFixture)
 #   name: content
 #   body: <p>In a <i>million</i> stars!</p>
+paper_one:
+  record: one (Paper)
+  name: notes
+  body: <div class="trix-content">My <i>favourite</i> paper!</div>
