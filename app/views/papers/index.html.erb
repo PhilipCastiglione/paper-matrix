@@ -1,10 +1,21 @@
-<% content_for :title, "Papers" %>
-<h1>Papers</h1>
-<%= link_to "New paper", new_paper_path %>
+<% content_for :title, "Paper Matrix" %>
+<div class="desktop-row section">
+  <h1>Paper Matrix</h1>
+  <%= link_to "Add Paper", new_paper_path, class: "button" %>
+</div>
 <div id="papers">
   <% @papers.each do |paper| %>
-    <%= link_to paper do %>
-      <%= render paper %>
+    <%= link_to paper, class: "no-underline section" do %>
+      <div id="<%= dom_id paper %>">
+        <p>
+          <%= paper.title.present? ? paper.title : "No Title Yet" %>
+          <%= "(#{paper.year})" if paper.year.present? %>
+          <% unless paper.read? %>
+            <span class="label-green">NEW</span>
+          <% end %>
+        </p>
+        <small><%= paper.authors.present? ? paper.authors : "Authors" %></small>
+      </div>
     <% end %>
   <% end %>
 </div>

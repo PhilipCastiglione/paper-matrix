@@ -1,0 +1,69 @@
+/* DEFINE VARIABLES */
+
+:root {
+    --cornflower-blue: #6395ee;
+    --botticelli: #91afb3;
+    --ming: #406d73;
+    --tiber: #102f33;
+    --white: #CADBF9;
+    --green: #63EE77;
+}
+
+/* COLORS */
+
+body {
+    background-color: var(--tiber);
+    color: var(--white);
+}
+
+/* TYPOGRAPHY */
+
+body {
+    font-family: Verdana, sans-serif;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 16px 0 8px 0;
+}
+
+p {
+    font-size: 1rem;
+    margin: 8px 0 4px 0;
+}
+
+small {
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+/* SPACING */
+
+body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 100px;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px 20px;
+    }
+}
+
+/* LINK STYLING */
+
+a {
+    color: var(--white);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--cornflower-blue);
+
+        &.no-underline {
+            text-decoration: none;
+        }
+    }
+
+}

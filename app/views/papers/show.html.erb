@@ -1,4 +1,12 @@
-<h2><%= render @paper %></h2>
+<% content_for :title, "Paper Matrix #{"- #{@paper.title}" if @paper.title.present?}" %>
+<div class="desktop-row section">
+  <h1>Paper Matrix</h1>
+  <%= link_to "Back to list", root_path %>
+</div>
+<div id="<%= dom_id @paper %>">
+  <p><%= @paper.title.present? ? @paper.title : "Title" %>, <%= @paper.year.present? ? @paper.year : "Year" %>, <%= @paper.read? ? "Read" : "Unread" %></p>
+  <small><%= @paper.authors.present? ? @paper.authors : "Authors" %></small>
+</div>
 <p>
   <strong>Url:</strong>
   <%= @paper.url %>
