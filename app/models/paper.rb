@@ -25,7 +25,15 @@ class Paper < ApplicationRecord
   validate :creation_requirements, on: :create
 
   def fetch_source_file_from_url!
-    return if url.blank? || !url.end_with?(".pdf") || source_file.attached?
+    if url.blank? || !url.end_with?(".pdf")
+      errors.add(:base, "Url must be present and end with .pdf")
+      return false
+    end
+
+    if source_file.attached?
+      errors.add(:base, "Source file must not already be attached")
+      return false
+    end
 
     uri = URI.parse(url)
     response = Net::HTTP.get_response(uri)
