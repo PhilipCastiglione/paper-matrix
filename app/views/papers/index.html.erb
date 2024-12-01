@@ -1,11 +1,39 @@
 <% content_for :title, "Paper Matrix" %>
-<div class="desktop-row section">
+<style>
+  .header-button {
+    transform: translateY(-8px);
+  }
+
+  .papers-list-item {
+    display: block;
+    margin-bottom: 24px;
+
+    &:hover {
+        text-decoration: none;
+    }
+  }
+
+  .author-caption {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+  }
+
+  .label-green {
+      display: inline-block;
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: text-bottom;
+  }
+</style>
+<div class="header-row">
   <h1>Paper Matrix</h1>
-  <%= link_to "Add Paper", new_paper_path, class: "button" %>
+  <%= link_to "Add Paper", new_paper_path, class: "button header-button" %>
 </div>
 <div id="papers">
   <% @papers.each do |paper| %>
-    <%= link_to paper, class: "no-underline section" do %>
+    <%= link_to paper, class: "papers-list-item" do %>
       <div id="<%= dom_id paper %>">
         <p>
           <%= paper.title.present? ? paper.title : "No Title Yet" %>
@@ -14,7 +42,7 @@
             <span class="label-green">NEW</span>
           <% end %>
         </p>
-        <small><%= paper.authors.present? ? paper.authors : "Authors" %></small>
+        <p class="author-caption"><%= paper.authors.present? ? paper.authors : "Authors" %></p>
       </div>
     <% end %>
   <% end %>

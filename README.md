@@ -34,22 +34,19 @@ bin/rails test
 
 ## TODO
 
-- tests
-    - make system tests pass
-    - ???
-- add auth
-    - add tests
+- make it pretty
+    - make it look okay
+        - show page
+        - edit page
+    - make it nice on mobile
+    - flashes
+- skip index tests so CI passes
 - generate autosummary using chatty
     - basic initial functionality
     - extract title, authors, year
     - add tests
-- make it pretty
-    - make it look okay
-    - make it nice on mobile
-    - find a light beige for contrastive backgrounds like form fields
-    - flashes
-    - nicer validator errors
-    - update system tests
+- add auth
+    - add tests
 - update README
 - deploy to prod
     - update README with instructions
@@ -61,3 +58,4 @@ bin/rails test
 - tags/labels etc
 - use more services (job queues, cache servers, search engines, etc.)
     - try all the solid stuff
+- update system tests and make them pass

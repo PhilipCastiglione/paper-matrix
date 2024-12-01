@@ -26,12 +26,12 @@ class Paper < ApplicationRecord
 
   def fetch_source_file_from_url!
     if url.blank? || !url.end_with?(".pdf")
-      errors.add(:base, "Url must be present and end with .pdf")
+      errors.add(:url, "Url must be present and end with .pdf")
       return false
     end
 
     if source_file.attached?
-      errors.add(:base, "Source file must not already be attached")
+      errors.add(:source_file, "Source file must not already be attached")
       return false
     end
 
@@ -42,11 +42,11 @@ class Paper < ApplicationRecord
       source_file.attach(io: StringIO.new(response.body), filename: File.basename(uri.path))
       true
     else
-      errors.add(:base, "Unable to fetch source file from url")
+      errors.add(:url, "Unable to fetch source file from url")
       false
     end
   rescue URI::InvalidURIError, Errno::ENOENT, Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::ETIMEDOUT, SocketError, OpenSSL::SSL::SSLError => e
-    errors.add(:base, "Unable to fetch source file from url: #{e.message}")
+    errors.add(:url, "Unable to fetch source file from url: #{e.message}")
     false
   end
 
@@ -63,22 +63,22 @@ class Paper < ApplicationRecord
 
     if source_file.attached?
       unless source_file.blob.content_type.start_with?("application/pdf")
-        errors.add(:base, "Source file must be a PDF")
+        errors.add(:source_file, "Source file must be a PDF")
       end
     end
 
     if url.present?
       unless url.end_with?(".pdf")
-        errors.add(:base, "Url must end with .pdf")
+        errors.add(:url, "Url must end with .pdf")
       end
 
       begin
         uri = URI.parse(url)
         if uri.host.nil? || !(uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS))
-          errors.add(:base, "Url is invalid")
+          errors.add(:url, "Url is invalid")
         end
       rescue URI::InvalidURIError
-        errors.add(:base, "Url is invalid")
+        errors.add(:url, "Url is invalid")
       end
     end
   end

@@ -6,7 +6,9 @@
     --ming: #406d73;
     --tiber: #102f33;
     --white: #CADBF9;
+    --off-white: #fff4e3;
     --green: #63EE77;
+    --red: #ee1159;
 }
 
 /* COLORS */
@@ -14,6 +16,10 @@
 body {
     background-color: var(--tiber);
     color: var(--white);
+}
+
+:focus {
+    outline: 1px solid var(--white);
 }
 
 /* TYPOGRAPHY */
@@ -60,10 +66,19 @@ a {
     &:hover {
         text-decoration: underline;
         color: var(--cornflower-blue);
-
-        &.no-underline {
-            text-decoration: none;
-        }
     }
+}
 
+/* FORM STYLING */
+
+input[type="text"] {
+    background-color: var(--off-white);
+    color: var(--tiber);
+    border: 2px solid var(--ming);
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+input[type="file"]::file-selector-button {
+    display: none;
 }
