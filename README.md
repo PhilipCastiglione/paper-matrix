@@ -34,13 +34,6 @@ bin/rails test
 
 ## TODO
 
-- make it pretty
-    - make it look okay
-        - show page
-        - edit page
-    - make it nice on mobile
-    - flashes
-- skip index tests so CI passes
 - generate autosummary using chatty
     - basic initial functionality
     - extract title, authors, year
@@ -58,4 +51,8 @@ bin/rails test
 - tags/labels etc
 - use more services (job queues, cache servers, search engines, etc.)
     - try all the solid stuff
+
+### Low Priority
+
 - update system tests and make them pass
+- trix editor doesn't breakpoint nicely
