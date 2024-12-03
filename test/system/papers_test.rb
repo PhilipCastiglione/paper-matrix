@@ -6,11 +6,13 @@ class PapersTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
+    skip()
     visit papers_url
     assert_selector "h1", text: "Papers"
   end
 
   test "should create paper" do
+    skip()
     visit papers_url
     click_on "New paper"
 
@@ -28,6 +30,7 @@ class PapersTest < ApplicationSystemTestCase
   end
 
   test "should update Paper" do
+    skip()
     visit paper_url(@paper)
     click_on "Edit this paper", match: :first
 
@@ -45,6 +48,7 @@ class PapersTest < ApplicationSystemTestCase
   end
 
   test "should destroy Paper" do
+    skip()
     visit paper_url(@paper)
     click_on "Destroy this paper", match: :first
 

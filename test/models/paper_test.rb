@@ -44,19 +44,19 @@ class PaperTest < ActiveSupport::TestCase
     paper = Paper.new
     paper.source_file.attach(io: StringIO.new("file"), filename: "file.txt")
     assert_not paper.valid?
-    assert_includes paper.errors[:base], "Source file must be a PDF"
+    assert_includes paper.errors[:source_file], "Source file must be a PDF"
   end
 
   test "url must end with .pdf" do
     paper = Paper.new(url: "http://example.com/paper.txt")
     assert_not paper.valid?
-    assert_includes paper.errors[:base], "Url must end with .pdf"
+    assert_includes paper.errors[:url], "Url must end with .pdf"
   end
 
   test "url must be a valid URL" do
     paper = Paper.new(url: "not a url")
     assert_not paper.valid?
-    assert_includes paper.errors[:base], "Url is invalid"
+    assert_includes paper.errors[:url], "Url is invalid"
   end
 
   test "fetch source file from url succeeds when supplied " do
@@ -69,33 +69,33 @@ class PaperTest < ActiveSupport::TestCase
   test "fetch source file from url fails when url is blank" do
     paper = Paper.new
     assert_not paper.fetch_source_file_from_url!
-    assert_includes paper.errors[:base], "Url must be present and end with .pdf"
+    assert_includes paper.errors[:url], "Url must be present and end with .pdf"
   end
 
   test "fetch source file from url fails when url does not end with .pdf" do
     paper = Paper.new(url: "http://example.com/paper.txt")
     assert_not paper.fetch_source_file_from_url!
-    assert_includes paper.errors[:base], "Url must be present and end with .pdf"
+    assert_includes paper.errors[:url], "Url must be present and end with .pdf"
   end
 
   test "fetch source file from url fails when source file is already attached" do
     paper = Paper.new(url: "http://example.com/paper.pdf")
     paper.source_file.attach(io: StringIO.new("file"), filename: "file.pdf")
     assert_not paper.fetch_source_file_from_url!
-    assert_includes paper.errors[:base], "Source file must not already be attached"
+    assert_includes paper.errors[:source_file], "Source file must not already be attached"
   end
 
   test "fetch source file from url fails when response is not successful" do
     paper = Paper.new(url: "http://example.com/paper.pdf")
     stub_request(:get, "http://example.com/paper.pdf").to_return(status: 404)
     assert_not paper.fetch_source_file_from_url!
-    assert_includes paper.errors[:base], "Unable to fetch source file from url"
+    assert_includes paper.errors[:url], "Unable to fetch source file from url"
   end
 
   test "fetch source file from url fails when unable to fetch" do
     paper = Paper.new(url: "http://example.com/paper.pdf")
     stub_request(:get, "http://example.com/paper.pdf").to_raise(Errno::ECONNREFUSED)
     assert_not paper.fetch_source_file_from_url!
-    assert_includes paper.errors[:base], "Unable to fetch source file from url: Connection refused - Exception from WebMock"
+    assert_includes paper.errors[:url], "Unable to fetch source file from url: Connection refused - Exception from WebMock"
   end
 end
