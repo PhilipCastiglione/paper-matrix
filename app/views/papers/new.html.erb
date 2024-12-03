@@ -1,46 +1,4 @@
-<% content_for :title, "Paper Matrix - Add Paper" %>
 <style>
-  .instructions {
-      font-size: 1.1rem;
-      font-style: italic;
-      margin-bottom: 32px;
-  }
-
-  .form-row {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 12px;
-
-    >:first-child {
-      min-width: 100px;
-      margin-right: 12px;
-    }
-
-    >:last-child {
-      flex-grow: 1;
-    }
-  }
-
-  .grow {
-    width: 100%;
-
-    * {
-      width: 100%;
-    }
-  }
-
-  .form-label {
-    display: inline-block;
-    margin-top: 4px;
-  }
-
-  .form-field-errors {
-    color: var(--red);
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-  }
-
   .or {
     font-weight: 600;
     font-style: italic;
@@ -49,33 +7,20 @@
     margin-bottom: 24px;
   }
 
-  .form-button {
-    padding: 4px 8px;
-    width: auto;
-    margin-right: 6px;
-  }
-
-  input[type="file"] {
-    width: auto;
-  }
 
   @media screen and (max-width: 768px) {
-    .form-button {
-        padding: 4px 8px;
+    .or {
+        text-align: left;
     }
-  }
-
-  .submit {
-    margin-top: 24px;
   }
 </style>
 <div class="header-row">
   <h1>Paper Matrix</h1>
   <%= link_to "Back to list", root_path %>
 </div>
+<p class="instructions">Add a paper. Either upload a pdf or enter a url.</p>
 <%= form_with(model: @paper) do |form| %>
-  <p class="instructions">Add a paper. Either upload a pdf or enter a url.</p>
-  <div class="form-row">
+  <div class="field-row">
     <%= form.label :url, class: "form-label" %>
     <div class="grow">
       <%= form.text_field :url %>
@@ -83,7 +28,7 @@
     </div>
   </div>
   <p class="or">OR</p>
-  <div class="form-row">
+  <div class="field-row">
     <%= form.label :source_file, class: "form-label" %>
     <div class="grow">
       <%= form.label :source_file, "Browse...", class: "button form-button" %>

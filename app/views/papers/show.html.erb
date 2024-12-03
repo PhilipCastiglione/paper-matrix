@@ -1,36 +1,70 @@
-<% content_for :title, "Paper Matrix #{"- #{@paper.title}" if @paper.title.present?}" %>
-<style></style>
+<style>
+  .title {
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+
+  .large-field {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 18px;
+  }
+
+  .button-container {
+    display: block;
+    height: 100%;
+
+    >* {
+      height: 100%;
+    }
+  }
+</style>
 <div class="header-row">
   <h1>Paper Matrix</h1>
   <%= link_to "Back to list", root_path %>
 </div>
-<div id="<%= dom_id @paper %>">
-  <p><%= @paper.title.present? ? @paper.title : "Title" %>, <%= @paper.year.present? ? @paper.year : "Year" %>, <%= @paper.read? ? "Read" : "Unread" %></p>
-  <small><%= @paper.authors.present? ? @paper.authors : "Authors" %></small>
+<p class="title">
+  <%= @paper.title.present? ? @paper.title : "No title yet." %>
+  <%= "(#{@paper.year})" if @paper.year.present? %>
+  <% unless @paper.read? %>
+    <span class="label-green">NEW</span>
+  <% end %>
+</p>
+<% if @paper.url.present? %>
+  <div class="field-row">
+    <p class="form-label">Url</p>
+    <p><%= link_to @paper.url %></p>
+  </div>
+<% end %>
+<div class="field-row">
+  <p class="form-label">Source file</p>
+  <% if @paper.source_file.attached? %>
+    <p><%= link_to @paper.source_file.filename, rails_blob_path(@paper.source_file, disposition: "attachment") %></p>
+  <% elsif @paper.url.present? %>
+    <p><%= button_to "Fetch source file", fetch_source_file_path(@paper), class: "button" %></p>
+  <% else %>
+    <p>No source file or url.</p>
+  <% end %>
 </div>
-<p>
-  <strong>Url:</strong>
-  <%= @paper.url %>
-</p>
-<p>
-  <strong>Source File:</strong>
-  <%= link_to @paper.source_file.filename, rails_blob_path(@paper.source_file, disposition: "attachment") if @paper.source_file.attached? %>
-</p>
-<p>
-  <strong>Auto summary:</strong>
-  <%= @paper.auto_summary %>
-</p>
-<p>
-  <strong>Notes:</strong>
-  <%= @paper.notes %>
-</p>
-<p>
-  <strong>Read:</strong>
-  <%= @paper.read %>
-</p>
-<div>
-  <%= (button_to "Fetch source file", fetch_source_file_path(@paper)) if @paper.url.present? && !@paper.source_file.attached? %>
-  <%= link_to "Edit this paper", edit_paper_path(@paper) %> |
-  <%= link_to "Back to papers", papers_path %>
-  <%= button_to "Destroy this paper", @paper, method: :delete %>
+<div class="large-field">
+  <p class="form-label">Auto summary</p>
+  <% if @paper.auto_summary.present? %>
+    <p><%= @paper.auto_summary %></p>
+  <% else %>
+    <p><%= button_to "Generate", fetch_source_file_path(@paper), class: "button" %></p>
+  <% end %>
+</div>
+<div class="large-field">
+  <p class="form-label">Notes</p>
+  <p><%= @paper.notes.present? ? @paper.notes : "No notes taken." %></p>
+</div>
+<div class="buttons">
+  <div><%= link_to "Edit Paper", edit_paper_path(@paper), class: "button" %></div>
+  <div><%= button_to "Delete Paper", @paper, method: :delete, class: "button button-warning", form_class: "button-container" %></div>
 </div>

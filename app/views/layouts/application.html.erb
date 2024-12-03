@@ -18,9 +18,13 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: name %>
-    <% end %>
+    <div data-controller="flash">
+      <div data-action="click->flash#close" class="flash">
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, class: name %>
+        <% end %>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>

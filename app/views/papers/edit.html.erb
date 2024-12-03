@@ -1,8 +1,107 @@
-<% content_for :title, "Editing paper" %>
-<h1>Editing paper</h1>
-<%= render "edit", paper: @paper %>
-<br>
-<div>
-  <%= link_to "Show this paper", @paper %> |
-  <%= link_to "Back to papers", papers_path %>
+<style>
+  .form {
+    margin-top: 32px;
+  }
+</style>
+<div class="header-row">
+  <h1>Paper Matrix</h1>
+  <%= link_to "Back to paper", @paper %>
 </div>
+<p class="instructions">Editing paper.</p>
+<% if @paper.url.present? %>
+  <div class="field-row">
+    <p>Url</p>
+    <p><%= link_to @paper.url %></p>
+  </div>
+<% end %>
+<div class="field-row">
+  <p>Source file</p>
+  <% if @paper.source_file.attached? %>
+    <p><%= link_to @paper.source_file.filename, rails_blob_path(@paper.source_file, disposition: "attachment") %></p>
+  <% elsif @paper.url.present? %>
+    <p><%= button_to "Fetch source file", fetch_source_file_path(@paper), class: "button" %></p>
+  <% else %>
+    <p>No source file or url.</p>
+  <% end %>
+</div>
+<%= form_with(model: @paper, class: "form") do |form| %>
+  <div class="field-row">
+    <%= form.label :title, class: "form-label" %>
+    <div class="grow">
+      <%= form.text_field :title %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:title].join(", ") if @paper.errors.messages[:title].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :authors, class: "form-label" %>
+    <div class="grow">
+      <%= form.text_field :authors %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:authors].join(", ") if @paper.errors.messages[:authors].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :year, class: "form-label" %>
+    <div class="grow">
+      <%= form.number_field :year, placeholder: 2024, step: 1, style: "width: auto;" %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:year].join(", ") if @paper.errors.messages[:year].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :auto_summary, class: "form-label" %>
+    <div class="grow">
+      <%= form.text_area :auto_summary %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:auto_summary].join(", ") if @paper.errors.messages[:auto_summary].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :notes, class: "form-label" %>
+    <div class="grow">
+      <%= form.rich_textarea :notes %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:notes].join(", ") if @paper.errors.messages[:notes].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :read, class: "form-label" %>
+    <div class="grow">
+      <%= form.checkbox :read %>
+      <p class="form-field-errors"><%= @paper.errors.messages[:read].join(", ") if @paper.errors.messages[:read].any? %>&nbsp;</p>
+    </div>
+  </div>
+  <div class="submit">
+    <%= form.submit class: "button" %>
+    <p class="form-field-errors"><%= @paper.errors.messages[:base].join(", ") if @paper.errors.messages[:base].any? %>&nbsp;</p>
+  </div>
+<% end %>
+<!--<br>
+<div>
+  <%#= link_to "Show this paper", @paper %> |-->
+<%#= link_to "Back to papers", papers_path %>
+<!--</div>
+
+  <div>
+    <%#= form.label :title, style: "display: block" %>-->
+<%#= form.text_field :title %>
+<!--  </div>
+  <div>
+    <%#= form.label :authors, style: "display: block" %>-->
+<%#= form.text_field :authors %>
+<!--  </div>
+  <div>
+    <%#= form.label :year, style: "display: block" %>-->
+<%#= form.number_field :year, placeholder: 2024, step: 1 %>
+<!--  </div>
+  <p>
+    <strong>Auto summary:</strong>
+    <%#= @paper.auto_summary %>-->
+<!--  </p>
+  <div>
+    <%#= form.label :notes, style: "display: block" %>-->
+<%#= form.rich_textarea :notes %>
+<!--  </div>
+  <div>
+    <%#= form.label :read, style: "display: block" %>-->
+<%#= form.checkbox :read %>
+<!--  </div>
+  <div>
+    <%#= form.submit %>-->
+<!--  </div>-->

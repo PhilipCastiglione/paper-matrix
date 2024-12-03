@@ -19,6 +19,7 @@
     border: 1px solid var(--white);
     padding: 6px 12px;
     border-radius: 4px;
+    text-decoration: none;
 
     &:hover {
         cursor: pointer;
@@ -31,5 +32,41 @@
 @media screen and (max-width: 768px) {
     .button {
         padding: 5px 10px;
+    }
+}
+
+.button-warning {
+    background-color: var(--ming);
+    border: 1px solid var(--red);
+    color: var(--red);
+
+    &:hover {
+        background-color: var(--red);
+        color: var(--white);
+    }
+}
+
+.author-caption {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.label-green {
+    display: inline-block;
+    color: var(--green);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.instructions {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 32px;
+}
+
+@media screen and (max-width: 768px) {
+    .instructions {
+        font-size: 0.9rem;
     }
 }

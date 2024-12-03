@@ -22,6 +22,14 @@ body {
     outline: 1px solid var(--white);
 }
 
+.notice {
+    color: var(--green);
+}
+
+.alert {
+    color: var(--red);
+}
+
 /* TYPOGRAPHY */
 
 body {
@@ -43,12 +51,23 @@ small {
     line-height: 1;
 }
 
-/* SPACING */
+/* LAYOUT */
 
 body {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px 100px;
+    min-height: 100vh;
+}
+
+.flash {
+    padding: 4px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--ming);
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -69,9 +88,18 @@ a {
     }
 }
 
+@media screen and (max-width: 768px) {
+    a {
+        text-decoration: underline;
+    }
+}
+
 /* FORM STYLING */
 
-input[type="text"] {
+input[type="text"],
+input[type="number"],
+input[type="checkbox"],
+textarea {
     background-color: var(--off-white);
     color: var(--tiber);
     border: 2px solid var(--ming);
@@ -79,6 +107,88 @@ input[type="text"] {
     padding: 4px 8px;
 }
 
+input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    margin-top: 6px;
+    border-radius: 4px;
+
+    &:checked {
+        accent-color: var(--botticelli);
+    }
+}
+
+input[type="file"] {
+    width: auto;
+}
+
 input[type="file"]::file-selector-button {
     display: none;
+}
+
+.field-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+    align-items: flex-start;
+
+    >:first-child {
+        min-width: 140px;
+        margin-right: 12px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .field-row {
+        flex-direction: column;
+        align-items: start;
+
+        >:first-child {
+            margin-bottom: 8px;
+        }
+    }
+}
+
+.grow {
+    width: 100%;
+
+    * {
+        width: 100%;
+    }
+}
+
+.form-label {
+    display: inline-block;
+    margin: 8px 0 4px 0;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .form-label {
+        text-decoration: none;
+        font-weight: 600;
+    }
+}
+
+.form-field-errors {
+    color: var(--red);
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+}
+
+.form-button {
+    padding: 4px 8px;
+    width: auto;
+    margin-right: 6px;
+}
+
+@media screen and (max-width: 768px) {
+    .form-button {
+        padding: 4px 8px;
+    }
+}
+
+.submit {
+    margin-top: 24px;
 }
