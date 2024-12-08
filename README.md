@@ -34,12 +34,16 @@ bin/rails test test:system
 
 ## TODO
 
-- add secret management for the openai key
 - some use of action cable & turbo streams
     - maybe nice auto updating from chatty's work; streaming
     - make the creation a watchable process where it goes and gets the file, then does the ai shit...
-- make the summarisation good (prompt engineering lol)
 - add auth
+    - disabled visual (must be logged in tooltip) and secure backend
+    - specifically to mutations/posts
+    - generate
+    - edit
+    - delete
+    - any other post endpoints?
     - add tests
 - update README
 - deploy to prod
@@ -50,11 +54,15 @@ bin/rails test test:system
 
 ### Wishlist
 
+- put a wrapper around the ai services so I can try/swap different models in
+    - extract auto summaries into a table, with a join table that records which model generated it and when
 - do something smarter with the pdf source files
 - tags/labels etc
-
-### Low Priority
+- make the summarisation better (prompt engineering lol)
 - use more services (solid queue, solid cache, ... etc.)
+
+### Things To Probably Ignore
+
 - update system tests and make them pass
 - add integration tests
 - trix editor doesn't breakpoint very nicely
