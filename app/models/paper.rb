@@ -50,6 +50,59 @@ class Paper < ApplicationRecord
     false
   end
 
+  def generate_auto_summary!
+    unless source_file.attached?
+      errors.add(:source_file, "Source file must be attached")
+      return false
+    end
+
+    client = OpenAI::Client.new
+
+    # TODO: do something smarter with the pdf file
+    # can we upload it to some endpoint and make it available directly?
+    # for now we are sending the text content of the pdf extracted by PDF::Reader
+
+    # client.files.upload(parameters: { file: "path/to/file.pdf", purpose: "assistants" })
+
+    # my_file = File.open(source_file.blob.download, "rb")
+    # my_file = StringIO.new(source_file.blob.download)
+    # client.files.upload(parameters: { file: my_file, purpose: "assistants" })
+
+    first_page_content = ""
+    pdf_content = ""
+    source_file.open do |file|
+      file.binmode
+      reader = PDF::Reader.new(file)
+      first_page_content = reader.pages.first.text
+      pdf_content = reader.pages.map(&:text).join("\n")
+    end
+
+    response = client.chat(parameters: {
+      model: "gpt-4o-mini",
+      messages: extraction_messages(first_page_content),
+      response_format: { type: "json_object" },
+      temperature: 0.2
+    })
+    update_fields_from_extraction(response.dig("choices", 0, "message", "content"))
+
+    client.chat(
+      parameters: {
+        model: "gpt-4o",
+        messages: summarization_messages(pdf_content),
+        temperature: 0.4,
+        stream: proc do |chunk, _bytesize|
+          new_content = chunk.dig("choices", 0, "delta", "content")
+          update auto_summary: (auto_summary || "") + new_content if new_content
+        end
+      }
+    )
+
+    true
+  rescue OpenAI::Error, Faraday::Error => e
+    errors.add(:auto_summary, "Unable to generate auto summary: #{e.message}")
+    false
+  end
+
   private
 
   def creation_requirements
@@ -81,5 +134,38 @@ class Paper < ApplicationRecord
         errors.add(:url, "Url is invalid")
       end
     end
+  end
+
+  def extraction_messages(first_page_content)
+    [
+      { role: "system", content: "You are an expert at reading and summarizing academic papers. You carefully extract requested data from academic papers." },
+      { role: "user", content: "Please extract the following information from the first page of an academic paper and respond with JSON:\n{\"title\":<paper title>,\"authors\":<paper authors>,\"year\":<publication year>}" },
+      { role: "user", content: "Here is the paper \n" + first_page_content }
+    ]
+  end
+
+  def update_fields_from_extraction(extracted_data)
+    parsed_data = JSON.parse(extracted_data)
+
+    new_title = parsed_data.fetch("title", nil)
+    new_authors = parsed_data.fetch("authors", nil)
+    new_year = parsed_data.fetch("year", nil)&.to_i
+
+    new_data = {}
+    new_data[:title] = new_title if new_title.present?
+    new_data[:authors] = new_authors if new_authors.present?
+    new_data[:year] = new_year if new_year.present?
+
+    update(new_data)
+  rescue Exception => e
+    errors.add(:base, "Unable to extract data: #{e.message}")
+  end
+
+  def summarization_messages(pdf_content)
+    [
+      { role: "system", content: "You are an expert at reading and summarizing academic papers. You provide succinct but detailed summaries of academic papers highlighting the most important details. You maintain an extremely high quality bar and are detailed and thorough." },
+      { role: "user", content: "Please summarize the following academic paper." },
+      { role: "user", content: pdf_content }
+    ]
   end
 end

@@ -1,5 +1,5 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: %i[ show edit update destroy fetch_source_file ]
+  before_action :set_paper, only: %i[ show edit update destroy fetch_source_file generate_auto_summary ]
 
   # GET /papers or /papers.json
   def index
@@ -52,6 +52,19 @@ class PapersController < ApplicationController
     respond_to do |format|
       if @paper.fetch_source_file_from_url!
         format.html { redirect_to @paper, notice: "Source file was successfully fetched." }
+        format.json { render :show, status: :ok, location: @paper }
+      else
+        format.html { redirect_to @paper, alert: @paper.errors.full_messages.join(", ") }
+        format.json { render json: @paper.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /papers/1/generate_auto_summary
+  def generate_auto_summary
+    respond_to do |format|
+      if @paper.generate_auto_summary!
+        format.html { redirect_to @paper, notice: "Auto summary was successfully generated." }
         format.json { render :show, status: :ok, location: @paper }
       else
         format.html { redirect_to @paper, alert: @paper.errors.full_messages.join(", ") }

@@ -38,6 +38,13 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to paper_url(@paper)
   end
 
+  test "should generate_auto_summary" do
+    @paper.stub(:generate_auto_summary!, true) do
+      post generate_auto_summary_url(@paper)
+      assert_redirected_to paper_url(@paper)
+    end
+  end
+
   test "should show paper" do
     get paper_url(@paper)
     assert_response :success

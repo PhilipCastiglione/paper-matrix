@@ -1,6 +1,9 @@
 <style>
   .title {
     font-size: 1.1rem;
+  }
+
+  .author-caption {
     margin-bottom: 32px;
   }
 
@@ -36,6 +39,7 @@
     <span class="label-green">NEW</span>
   <% end %>
 </p>
+<p class="author-caption"><%= @paper.authors.present? ? @paper.authors : "Authors" %></p>
 <% if @paper.url.present? %>
   <div class="field-row">
     <p class="form-label">Url</p>
@@ -55,9 +59,9 @@
 <div class="large-field">
   <p class="form-label">Auto summary</p>
   <% if @paper.auto_summary.present? %>
-    <p><%= @paper.auto_summary %></p>
+    <p style="white-space:break-spaces;"><%= @paper.auto_summary %></p>
   <% else %>
-    <p><%= button_to "Generate", fetch_source_file_path(@paper), class: "button" %></p>
+    <p><%= button_to "Generate", generate_auto_summary_path(@paper), class: "button" %></p>
   <% end %>
 </div>
 <div class="large-field">

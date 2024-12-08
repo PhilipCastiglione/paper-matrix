@@ -40,6 +40,12 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# Use OpenAI's AI models [https://github.com/alexrudall/ruby-openai]
+gem "ruby-openai"
+
+# Use the PDF reader [https://github.com/yob/pdf-reader]
+gem "pdf-reader"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -69,4 +75,7 @@ group :test do
 
   # Use webmock to stub HTTP requests [https://github.com/bblimke/webmock]
   gem "webmock"
+
+  # use minitest-focus to run only focused tests [https://github.com/minitest/minitest-focus-
+  gem "minitest-focus"
 end

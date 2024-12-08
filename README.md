@@ -29,30 +29,32 @@ bin/rails db:migrate
 **Tests:**
 
 ```sh
-bin/rails test
+bin/rails test test:system
 ```
 
 ## TODO
 
-- generate autosummary using chatty
-    - basic initial functionality
-    - extract title, authors, year
-    - add tests
+- add secret management for the openai key
+- some use of action cable & turbo streams
+    - maybe nice auto updating from chatty's work; streaming
+    - make the creation a watchable process where it goes and gets the file, then does the ai shit...
+- make the summarisation good (prompt engineering lol)
 - add auth
     - add tests
 - update README
 - deploy to prod
+    - hook up deployment to my VPS
+    - connect to CI/CD
     - update README with instructions
     - backups for db, action storage
-- make the summarisation good (prompt engineering lol)
-- some use of action cable..?
-    - maybe nice auto updating from chatty's work; streaming
-    - make the creation a watchable process where it goes and gets the file, then does the ai shit...
+
+### Wishlist
+
+- do something smarter with the pdf source files
 - tags/labels etc
-- use more services (job queues, cache servers, search engines, etc.)
-    - try all the solid stuff
 
 ### Low Priority
-
+- use more services (solid queue, solid cache, ... etc.)
 - update system tests and make them pass
-- trix editor doesn't breakpoint nicely
+- add integration tests
+- trix editor doesn't breakpoint very nicely

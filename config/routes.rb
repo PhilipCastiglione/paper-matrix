@@ -12,6 +12,7 @@
 #                                          PUT    /papers/:id(.:format)                                                                             papers#update
 #                                          DELETE /papers/:id(.:format)                                                                             papers#destroy
 #                        fetch_source_file POST   /papers/:id/fetch_source_file(.:format)                                                           papers#fetch_source_file
+#                    generate_auto_summary POST   /papers/:id/generate_auto_summary(.:format)                                                       papers#generate_auto_summary
 #                                     root GET    /                                                                                                 papers#index
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
   resources :papers
 
   post "/papers/:id/fetch_source_file", to: "papers#fetch_source_file", as: :fetch_source_file
+  post "/papers/:id/generate_auto_summary", to: "papers#generate_auto_summary", as: :generate_auto_summary
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
