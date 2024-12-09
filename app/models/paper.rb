@@ -149,7 +149,7 @@ class Paper < ApplicationRecord
   def extraction_messages(first_page_content)
     [
       { role: "system", content: "You are an expert at reading and summarizing academic papers. You carefully extract requested data from academic papers." },
-      { role: "user", content: "Please extract the following information from the first page of an academic paper and respond with JSON:\n{\"title\":<paper_title:string>,\"authors\":<paper_authors:string>,\"year\":<publication_year>}" },
+      { role: "user", content: "Please extract the following information from the first page of an academic paper and respond with JSON:\n{\"title\":<paper_title:string>,\"authors\":<paper_authors:string>,\"year\":<publication_year:integer>}" },
       { role: "user", content: "Here is the paper \n" + first_page_content }
     ]
   end

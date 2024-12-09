@@ -10,7 +10,7 @@
   <% if paper.url.present? %>
     <div class="field-row">
       <p class="form-label">Url</p>
-      <p><%= link_to paper.url %></p>
+      <p><%= link_to paper.url, paper.url %></p>
     </div>
   <% end %>
   <div class="field-row">
