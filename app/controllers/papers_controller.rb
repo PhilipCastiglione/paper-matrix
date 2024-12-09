@@ -66,7 +66,7 @@ class PapersController < ApplicationController
   def generate_auto_summary
     respond_to do |format|
       if @paper.generate_auto_summary!
-        format.html { redirect_to @paper, notice: "Auto summary was successfully generated." }
+        format.html { redirect_to @paper }
         format.json { render :show, status: :ok, location: @paper }
       else
         format.html { redirect_to @paper, alert: @paper.errors.full_messages.join(", ") }
@@ -86,13 +86,12 @@ class PapersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_paper
-      @paper = Paper.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def paper_params
-      params.expect(paper: [ :url, :title, :read, :authors, :year, :auto_summary, :notes, :source_file ])
-    end
+  def set_paper
+    @paper = Paper.find(params.expect(:id))
+  end
+
+  def paper_params
+    params.expect(paper: [ :url, :title, :read, :authors, :year, :auto_summary, :notes, :source_file ])
+  end
 end

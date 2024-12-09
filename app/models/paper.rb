@@ -18,6 +18,8 @@ class Paper < ApplicationRecord
   has_rich_text :notes
   has_one_attached :source_file
 
+  after_update_commit -> { broadcast_updated }
+
   default_scope { order(year: :desc, authors: :asc, title: :asc) }
 
   validates :title, uniqueness: true, allow_blank: true
@@ -92,7 +94,7 @@ class Paper < ApplicationRecord
         temperature: 0.4,
         stream: proc do |chunk, _bytesize|
           new_content = chunk.dig("choices", 0, "delta", "content")
-          update auto_summary: (auto_summary || "") + new_content if new_content
+          update(auto_summary: (auto_summary || "") + new_content) if new_content
         end
       }
     )
@@ -104,6 +106,14 @@ class Paper < ApplicationRecord
   end
 
   private
+
+  def broadcast_updated
+    broadcast_replace(
+      partial: "papers/paper",
+      locals: { paper: self },
+      target: "paper_#{id}"
+    )
+  end
 
   def creation_requirements
     if url.blank? && !source_file.attached?
@@ -139,7 +149,7 @@ class Paper < ApplicationRecord
   def extraction_messages(first_page_content)
     [
       { role: "system", content: "You are an expert at reading and summarizing academic papers. You carefully extract requested data from academic papers." },
-      { role: "user", content: "Please extract the following information from the first page of an academic paper and respond with JSON:\n{\"title\":<paper title>,\"authors\":<paper authors>,\"year\":<publication year>}" },
+      { role: "user", content: "Please extract the following information from the first page of an academic paper and respond with JSON:\n{\"title\":<paper_title:string>,\"authors\":<paper_authors:string>,\"year\":<publication_year>}" },
       { role: "user", content: "Here is the paper \n" + first_page_content }
     ]
   end
