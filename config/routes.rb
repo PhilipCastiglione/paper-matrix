@@ -3,6 +3,13 @@
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
 #                                                 /assets                                                                                           Propshaft::Server
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
+#                              new_session GET    /session/new(.:format)                                                                            sessions#new
+#                             edit_session GET    /session/edit(.:format)                                                                           sessions#edit
+#                                  session GET    /session(.:format)                                                                                sessions#show
+#                                          PATCH  /session(.:format)                                                                                sessions#update
+#                                          PUT    /session(.:format)                                                                                sessions#update
+#                                          DELETE /session(.:format)                                                                                sessions#destroy
+#                                          POST   /session(.:format)                                                                                sessions#create
 #                                   papers GET    /papers(.:format)                                                                                 papers#index
 #                                          POST   /papers(.:format)                                                                                 papers#create
 #                                new_paper GET    /papers/new(.:format)                                                                             papers#new
@@ -45,6 +52,8 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
+
+  resource :session
 
   resources :papers
 
