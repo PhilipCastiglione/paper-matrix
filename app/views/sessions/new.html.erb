@@ -1,8 +1,21 @@
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
-<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+<div class="header-row">
+  <h1>Paper Matrix</h1>
+  <%= link_to "Back to list", root_path %>
+</div>
 <%= form_with url: session_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
-  <%= form.submit "Sign in" %>
+  <div class="field-row">
+    <%= form.label :email_address, class: "form-label" %>
+    <div class="grow">
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+    </div>
+  </div>
+  <div class="field-row">
+    <%= form.label :password, class: "form-label" %>
+    <div class="grow">
+      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
+    </div>
+  </div>
+  <div class="submit">
+    <%= form.submit "Sign in", class: "button" %>
+  </div>
 <% end %>
-<br>

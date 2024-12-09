@@ -1,4 +1,6 @@
 class PapersController < ApplicationController
+  allow_unauthenticated_access only: %i[ index show ]
+
   before_action :set_paper, only: %i[ show edit update destroy fetch_source_file generate_auto_summary ]
 
   # GET /papers or /papers.json

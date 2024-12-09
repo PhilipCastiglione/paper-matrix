@@ -12,20 +12,15 @@
     margin-bottom: 32px;
   }
 
+  .space-top {
+    margin-top: 12px;
+  }
+
   .buttons {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     gap: 18px;
-  }
-
-  .button-container {
-    display: block;
-    height: 100%;
-
-    >* {
-      height: 100%;
-    }
   }
 </style>
 <div class="header-row">
@@ -51,7 +46,11 @@
   <% if @paper.source_file.attached? %>
     <p><%= link_to @paper.source_file.filename, rails_blob_path(@paper.source_file, disposition: "attachment") %></p>
   <% elsif @paper.url.present? %>
-    <p><%= button_to "Fetch source file", fetch_source_file_path(@paper), class: "button" %></p>
+    <% if authenticated? %>
+      <%= button_to "Fetch source file", fetch_source_file_path(@paper), class: "button" %>
+    <% else %>
+      <div class="button disabled">Fetch source file</div>
+    <% end %>
   <% else %>
     <p>No source file or url.</p>
   <% end %>
@@ -61,7 +60,13 @@
   <% if @paper.auto_summary.present? %>
     <p style="white-space:break-spaces;"><%= @paper.auto_summary %></p>
   <% else %>
-    <p><%= button_to "Generate", generate_auto_summary_path(@paper), class: "button" %></p>
+    <% if authenticated? %>
+      <%= button_to "Generate", generate_auto_summary_path(@paper), class: "button", form_class: "space-top" %>
+    <% else %>
+      <div class="space-top">
+        <div class="button disabled">Generate</div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 <div class="large-field">
@@ -69,6 +74,11 @@
   <p><%= @paper.notes.present? ? @paper.notes : "No notes taken." %></p>
 </div>
 <div class="buttons">
-  <div><%= link_to "Edit Paper", edit_paper_path(@paper), class: "button" %></div>
-  <div><%= button_to "Delete Paper", @paper, method: :delete, class: "button button-warning", form_class: "button-container" %></div>
+  <% if authenticated? %>
+    <div><%= link_to "Edit Paper", edit_paper_path(@paper), class: "button" %></div>
+    <div><%= button_to "Delete Paper", @paper, method: :delete, class: "button button-warning", form_class: "button-container" %></div>
+  <% else %>
+    <div class="button disabled">Edit Paper</div>
+    <div class="button disabled">Delete Paper</div>
+  <% end %>
 </div>

@@ -1,6 +1,7 @@
 <style>
   .header-button {
-    transform: translateY(-8px);
+    display: inline-block;
+    height: 36.4px;
   }
 
   @media screen and (max-width: 768px) {
@@ -23,7 +24,17 @@
 </style>
 <div class="header-row">
   <h1>Paper Matrix</h1>
-  <%= link_to "Add Paper", new_paper_path, class: "button header-button" %>
+  <% if authenticated? %>
+    <div>
+      <%= link_to "Add Paper", new_paper_path, class: "button header-button" %>
+      <%= button_to "Logout", {controller: :sessions, action: "destroy"}, method: :delete, class: "button header-button", form_class: "button-container" %>
+    </div>
+  <% else %>
+    <div>
+      <div class="button header-button disabled">Add Paper</div>
+      <%= link_to "Sign in", new_session_path, class: "button header-button" %>
+    </div>
+  <% end %>
 </div>
 <div id="papers">
   <% @papers.each do |paper| %>
