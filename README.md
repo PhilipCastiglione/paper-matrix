@@ -42,7 +42,7 @@ With docker running:
 ```sh
 export KAMAL_REGISTRY_TOKEN=...
 
-kamal deploy
+bin/kamal deploy
 ```
 
 ## TODO
