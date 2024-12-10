@@ -2,6 +2,8 @@
 
 A web app for summarizing academic papers and keeping notes.
 
+Live at: https://pm.philipcastiglione.com/
+
 ## Technologies
 
 I created this repo mainly to play with Ruby on Rails 8. This is using standard Rails 8 stack and defaults and is deployed bare metal style to a VPS. DHH would be proud.
