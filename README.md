@@ -37,14 +37,19 @@ bin/rails test
 
 ### Deployment
 
-- deploy to prod
-    - hook up deployment to my VPS
-    - connect to CI/CD
-    - update README with instructions
-    - backups for db, action storage
+With docker running:
+
+```sh
+export KAMAL_REGISTRY_TOKEN=...
+
+kamal deploy
+```
 
 ## TODO
 
+- backups for db, action storage
+    - mount a docker volume so you can backup sqlite and action storage
+- loading spinner when waiting for api calls
 - put a wrapper around the ai services so I can try/swap different models in
     - extract auto summaries into a table, with a join table that records which model generated it and when
 - better error handling when the generate streaming fails
