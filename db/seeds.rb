@@ -1,5 +1,5 @@
-email_address = Rails.application.credentials.user[:email]
-password = Rails.application.credentials.user[:password]
+email_address = Rails.application.credentials.dig(:user, :email)
+password = Rails.application.credentials.dig(:user, :password)
 
 unless User.exists?(email_address: email_address)
   user = User.new(email_address: email_address)
