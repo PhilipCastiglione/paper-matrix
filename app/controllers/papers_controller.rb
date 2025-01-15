@@ -5,7 +5,7 @@ class PapersController < ApplicationController
 
   # GET /papers or /papers.json
   def index
-    @papers = Paper.all
+    @papers = Paper.all.with_rich_text_notes_and_embeds
   end
 
   # GET /papers/1 or /papers/1.json
